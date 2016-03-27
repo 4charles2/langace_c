@@ -1,0 +1,158 @@
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
+
+#include "main.h"
+
+int main(){
+
+    printf("Bienvenue dans mon petit programme\n");
+    game(choice_difficulty());
+
+    return 0;
+}
+
+void game (int difficulty)
+{
+    int numberMystery = ft_number_mystery(difficulty);
+    int answer = 0;
+    int i = 15;
+
+    printf("Bonjour decouvrez le jeu plus ou moin\n");
+    printf("Vous devez devinez le nombre mystere entre 1 et %d\n", difficulty);
+
+    while (answer != numberMystery)
+    {
+        printf("Il vous reste %d coup pour deviner le mot.\n", i);
+        printf("Entrez le nombre mystere\n");
+        scanf("%d", &answer);
+        verif_answer_numberMystery(answer, numberMystery, i);
+     }
+     retry_game();
+}
+
+int choice_difficulty()
+{
+    int choice = 0;
+    int MAX = 1;
+
+    printf("Choix de la difficulté\n");
+    printf("1. facile(1 à 100)\n");
+    printf("2. moyen(1 à 500)\n");
+    printf("3. difficile(1 à 1000)\n");
+
+    int res = scanf("%d", &choice);
+
+    if(res)
+    {
+        switch(choice)
+        {
+            case 1:
+               MAX = 100;
+               break;
+            case 2:
+               MAX = 500;
+               break;
+            case 3:
+               MAX = 1000;
+               break;
+            default :
+               MAX = 100;
+               break;
+        }
+    }
+    else
+    {
+        printf("Mauvaise entrer !\n");
+        return 100;
+    }
+    return MAX;
+}
+
+int choice_number_gamer()
+{
+    int nb_gamer = 1;
+
+    printf("Choisissez le nombre de joueur\n");
+    printf("1.joueur\n");
+    printf("2.joueur\n");
+    scanf("%d", &nb_gamer);
+
+
+    switch(nb_gamer)
+    {
+        case 1:
+            return 1;
+            break;
+        case 2:
+            //faire un envoi sur game 
+            return 2;
+            break;
+        default :
+            printf("Mauvaise entrer (1joueur par defaut)\n");
+            return 1;
+            break;
+    }
+}
+
+void verif_answer_numberMystery(int answer, int numberMystery, int i)
+{
+
+        if (answer == numberMystery)
+            printf("Bravo vous avez trouver le nombre mystere\n");
+        else if (answer < numberMystery)
+            printf("C'est plus\n");
+        else if (answer > numberMystery)
+            printf("C'est moins\n");
+        else
+            printf("Vous n'avez pas entre un bon numero\n");
+        if (!i)
+        {
+            printf("Vous avez perdu !\n");
+            retry_game();
+        }
+        i--;
+}
+
+int ft_number_mystery(int MAX)
+{
+    const int MIN = 1;
+          int numberMystery = 0;
+    if(choice_number_gamer() == 2)
+    {
+
+        printf("Joueur 2 entrer le nombre mystere a deviner\n");
+        printf("Entre 1 et %d\n", MAX);
+        scanf("%d", &numberMystery);
+    }
+    else
+    {
+        srand(time(NULL));
+        numberMystery = (rand() % (MAX - MIN + 1)) + MIN;
+    }
+    return numberMystery;
+}
+
+void retry_game()
+{
+    int retry = 2;
+    printf("voulez vou refaire une partie !\n");
+    printf("1.Oui\n2.Non\n");
+    printf("Entrez votre choix :\n");
+
+    scanf("%d", &retry);
+
+    switch(retry)
+    {
+        case 1:
+            game(choice_difficulty());
+            break;
+        case 2:
+            printf("Au revoir");
+            return ;
+            break;
+        default:
+            printf("Vous n'avez pas entrer un bon choix");
+            break;
+    }
+}
