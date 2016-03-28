@@ -1,4 +1,4 @@
-typedef struct st_game party;
+typedef struct st_game st_game;
 struct st_game
 {
     int nb_coup_restant;
