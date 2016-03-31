@@ -14,15 +14,28 @@ int main(){
 void game_pendu()
 {
     st_game party;
-    creation_mystery_word(&party);
+    if(creation_mystery_word(&party))
+        printf("%s", party.mot_mystere);
+    else
+        printf("Le mot mystere n'à pas été créer");
 }
 
 int creation_mystery_word(st_game* party)
 {
     FILE* dico = NULL;
+
+    srand(time(NULL));
+    int number_rand = (rand()%8);
+    printf("%d", number_rand);
+    //fseek(dico, number_rand, SEEK_SET);
     dico = fopen("dico.txt", "r");
     if(dico == NULL)
         printf("Le dictionnaire ne c'est pas ouvert");
-    fgets(party->mot_mystere, 30, fichier);
-    fclose(dico);
+    if(fgets(party->mot_mystere, 30, dico))
+    {
+        fclose(dico);
+        return 1;
+    }
+    else
+        return 0;
 }
