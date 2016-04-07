@@ -1,0 +1,17 @@
+CFLAGS=-O3 #Option d'optimisation du programme
+LDFLAGS=-lSDL -lSDL_mixer #Linker
+EXEC=manpulation_sdl  #Nom du programme à modifier
+
+all: ${EXEC}
+
+${EXEC}: ${EXEC}.o
+	gcc $(CFLAGS) -o ${EXEC} ${EXEC}.o ${LDFLAGS}
+
+${EXEC}.o: ${EXEC}.c
+	gcc $(CFLAGS) -o ${EXEC}.o -c ${EXEC}.c
+
+clean:	
+	rm -fr *.o
+
+mrproper: clean
+	rm -fr ${EXEC}
