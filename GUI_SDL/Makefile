@@ -2,7 +2,7 @@ NAME=manip #Nom du programme à modifier
 SRC=manipulation_sdl.c
 OBJ=manipulation_sdl.o
 SDLFLAGS=$$(sdl-config --cflags --libs)
-CFLAGS= -lSDL #Option d'optimisation du programme
+CFLAGS= -lSDL -lSDL_image#Option d'optimisation du programme
 
 all: $(NAME)
 

@@ -3,15 +3,16 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 
+void pause(void);
+
 int main(int argc, char **argv)
 {
 	SDL_Surface *personnage = NULL;
 	SDL_Surface *screen = NULL;
 	SDL_Surface *img_background = NULL;
 	SDL_Surface *fir = NULL;
-	SDL_Event Evenement;
 	SDL_Rect position_personnage, position_background, position_fir;
-	int i = 0, continuer = 1;
+	int i = 0;
 
 	if(SDL_Init(SDL_INIT_VIDEO) == -1)
 	{
@@ -25,7 +26,7 @@ int main(int argc, char **argv)
 	/*Defini le titre de la fenetre et de l'icone*/
 	SDL_WM_SetCaption("Mon application", "The application");
 
-	if((screen = SDL_SetVideoMode(806, 606, 32, SDL_HWSURFACE | SDL_DOUBLEBUF)) == NULL)
+	if((screen = SDL_SetVideoMode(806, 606, 32, SDL_HWSURFACE)) == NULL)
 	{
 		fprintf(stderr, "Chargement surface screen impossible %s", SDL_GetError());
 		exit(EXIT_FAILURE);
@@ -35,12 +36,21 @@ int main(int argc, char **argv)
 	img_background = SDL_LoadBMP("pack_images_sdz/lac_en_montagne.bmp");
 	position_background.x = 3;
 	position_background.y = 3;
+	SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 38, 196, 236));
+	/*Remplie la surface screen avec la couleur defini dans SDL_MapRGB*/
+
+	SDL_BlitSurface(img_background, NULL, screen, &position_background);
+
+	SDL_Flip(screen);
+	/*Met à jour l'écran*/
 
 	/*Creation d'une image pour surface */
 	position_fir.x = 650;
 	position_fir.y = 260;
 	fir = IMG_Load("pack_images_sdz/sapin.png");
 	SDL_SetAlpha(fir, SDL_SRCALPHA, 122);
+	SDL_BlitSurface(fir, NULL, screen, &position_fir);
+	SDL_Flip(screen);
 
 	/*creation de la deuxieme surface*/
 	personnage = SDL_LoadBMP("pack_images_sdz/zozor.bmp");
@@ -52,67 +62,31 @@ int main(int argc, char **argv)
 	/*Coller la deuxieme surface sur la surface souhaiter ici la fenetre screen*/
 	position_personnage.x = 485;
 	position_personnage.y = 260;
+	SDL_BlitSurface(personnage, NULL, screen, &position_personnage);
 	/*personnage = create_area(50, 50, 32);*/
+	SDL_Flip(screen);
 
-	/*Activation de la répétition des touches*/
-	SDL_EnableKeyRepeat(10, 100);
-
-
-	while(continuer)
-	{
-		SDL_WaitEvent(&Evenement);
-
-		switch(Evenement.type)
-		{
-			case SDL_QUIT:
-				continuer = 0;
-				break;
-			case SDL_KEYDOWN:
-				switch(Evenement.key.keysym.sym)
-				{
-					case SDLK_ESCAPE:
-						continuer = 0;
-						break;
-					case SDLK_LEFT:
-						position_personnage.x-=10;
-						break;
-					case SDLK_UP:
-						position_personnage.y-=10;
-						break;
-					case SDLK_DOWN:
-						position_personnage.y+=10;
-						break;
-					case SDLK_RIGHT:
-						position_personnage.x+=10;
-						break;
-				}
-				break;
-			case SDL_MOUSEBUTTONUP:
-				switch(Evenement.button.button)
-				{
-					case SDL_BUTTON_LEFT:
-						position_personnage.x = Evenement.button.x - personnage->w / 2;
-						position_personnage.y = Evenement.button.y - personnage->h / 2;
-						break;
-				}
-				break;
-			case SDL_MOUSEMOTION:
-					position_personnage.x = Evenement.motion.x - personnage->w / 2;
-					position_personnage.y = Evenement.motion.y - personnage->h / 2;
-				break;
-		}
-
-	/*Remplie la surface screen avec la couleur defini dans SDL_MapRGB*/
-		SDL_FillRect(screen, NULL, SDL_MapRGB(screen->format, 38, 196, 236));
-		SDL_BlitSurface(img_background, NULL, screen, &position_background);
-		SDL_BlitSurface(personnage, NULL, screen, &position_personnage);
-		SDL_BlitSurface(fir, NULL, screen, &position_fir);
-		SDL_Flip(screen);
-	}
-
+	pause();
 	/*Je libere les surface creer*/
 	SDL_FreeSurface(fir);
 	SDL_FreeSurface(personnage);
 	SDL_Quit();
 	return EXIT_SUCCESS;
+}
+
+void pause()
+{
+	int continuer = 1;
+	SDL_Event event;
+
+	while(continuer)
+	{
+		SDL_WaitEvent(&event);
+		switch(event.type)
+		{
+			case SDL_QUIT:
+				continuer = 0;
+		}
+	}
+
 }

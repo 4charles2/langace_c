@@ -94,12 +94,16 @@ int main(int argc, char **argv)
 						position_personnage.x = Evenement.button.x - personnage->w / 2;
 						position_personnage.y = Evenement.button.y - personnage->h / 2;
 						break;
+					case SDL_BUTTON_RIGHT:
+						position_personnage.x = Evenement.motion.x - personnage->w / 2;
+						position_personnage.y = Evenement.motion.y - personnage->h / 2;
+						break;
 				}
 				break;
-			case SDL_MOUSEMOTION:
+			/*case SDL_MOUSEMOTION:
 					position_personnage.x = Evenement.motion.x - personnage->w / 2;
 					position_personnage.y = Evenement.motion.y - personnage->h / 2;
-				break;
+				break;*/
 		}
 
 	/*Remplie la surface screen avec la couleur defini dans SDL_MapRGB*/
