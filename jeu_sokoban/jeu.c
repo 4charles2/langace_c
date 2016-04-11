@@ -1,8 +1,9 @@
 /*
 
+jeu.c
+------------------
 
-
-
+Moteur du jeu
 
 
 
@@ -19,6 +20,7 @@ void jouer(SDL_Surface* ecran)
 {
 	SDL_Surface *mario[4] = {NULL};
 	SDL_Surface *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL;
+	SDL_Surface *regle = NULL;
 	SDL_Rect position, positionJoueur;
 	SDL_Event event;
 
@@ -34,6 +36,8 @@ void jouer(SDL_Surface* ecran)
 	mario[GAUCHE] = IMG_Load("mario_gauche.gif");
 	mario[HAUT] = IMG_Load("mario_haut.gif");
 	mario[DROITE] = IMG_Load("mario_droite.gif");
+	regle = IMG_Load("regle.png");
+
 
 	marioActuel = mario[BAS];
 
@@ -54,7 +58,19 @@ void jouer(SDL_Surface* ecran)
 			}
 		}
 	}
-
+	//Mise en place de l'ecran d'aide
+	while(continuer)
+	{
+		SDL_BlitSurface(regle, NULL, ecran, &position);
+		SDL_WaitEvent(&event);
+		if(event.type == SDL_QUIT)
+			exit(EXIT_SUCCESS);
+		if(event.key.keysym.sym == SDLK_ESCAPE)
+			continuer = 0;
+		SDL_Flip(ecran);
+	}
+	SDL_FreeSurface(regle);
+	continuer = 1;
 	// Activation de la répétition des touches
 	SDL_EnableKeyRepeat(100, 100);
 

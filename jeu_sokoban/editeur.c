@@ -18,7 +18,7 @@ Role : editeur de la carte du jeu
 
 void editeur(SDL_Surface* ecran)
 {
-	SDL_Surface *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL;
+	SDL_Surface *mur = NULL, *caisse = NULL, *objectif = NULL, *mario = NULL, *regle = NULL;
 	SDL_Rect position;
 	SDL_Event event;
 
@@ -30,9 +30,25 @@ void editeur(SDL_Surface* ecran)
 	caisse = IMG_Load("caisse.jpg");
 	objectif = IMG_Load("objectif.png");
 	mario = IMG_Load("mario_bas.gif");
+	regle = IMG_Load("regleEditeur.png");
 
 	if(!chargerNiveau(carte))
 		exit(EXIT_FAILURE);
+	//Mise en place de l'ecran d'aide
+	position.x = 0;
+	position.y = 0;
+	while(continuer)
+	{
+		SDL_BlitSurface(regle, NULL, ecran, &position);
+		SDL_WaitEvent(&event);
+		if(event.type == SDL_QUIT)
+			exit(EXIT_SUCCESS);
+		if(event.key.keysym.sym == SDLK_ESCAPE)
+			continuer = 0;
+		SDL_Flip(ecran);
+	}
+	SDL_FreeSurface(regle);
+	continuer = 1;
 	
 	while(continuer)
 	{
