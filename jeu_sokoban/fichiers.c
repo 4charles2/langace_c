@@ -8,18 +8,14 @@
 #include "editeur.h"
 #include "fichier.h"
 
-int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
+int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR], int niveauActuel)
 {
-	FILE* fichier = NULL;
 
 	char ligneFichier[NB_BLOCS_LARGEUR * NB_BLOCS_HAUTEUR + 1] = {0};
 	int i = 0, j = 0;
 
-	fichier = fopen("niveaux.lvl", "r");
-	if(fichier == NULL)
-		return 0;
-
-	fgets(ligneFichier, NB_BLOCS_LARGEUR * NB_BLOCS_HAUTEUR + 1, fichier);
+	
+	choice_level(ligneFichier, niveauActuel);
 
 	for(i = 0; i < NB_BLOCS_LARGEUR; i++)
 	{
@@ -45,7 +41,6 @@ int chargerNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 			}
 		}
 	}
-	fclose(fichier);
 	return 1;
 }
 
@@ -54,7 +49,7 @@ int sauvegarderNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 	FILE *fichier = NULL;
 	int i = 0, j = 0;
 
-	fichier = fopen("niveaux.lvl", "w");
+	fichier = fopen("niveaux.lvl", "a");
 	if(fichier == NULL)
 		return 0;
 
@@ -65,6 +60,32 @@ int sauvegarderNiveau(int niveau[][NB_BLOCS_HAUTEUR])
 			fprintf(fichier, "%d", niveau[j][i]);
 		}
 	}
+
+	fprintf(fichier, "%c", '\n');
 	fclose(fichier);
 	return 1;
+}
+
+void choice_level(char *ligneFichier, int choiceLevel)
+{
+	FILE *fichier = NULL;
+	int nb_level = 0;
+	char c;
+	
+
+	fichier = fopen("niveaux.lvl", "r");
+	if(fichier == NULL)
+		exit(EXIT_FAILURE);
+
+	while(c != EOF)
+		{
+			if(nb_level == choiceLevel)
+				fgets(ligneFichier, NB_BLOCS_LARGEUR * NB_BLOCS_HAUTEUR + 1, fichier);
+
+			c = fgetc(fichier);
+			if(c == '\n')
+				nb_level++;
+
+		}
+	fclose(fichier);
 }

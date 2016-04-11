@@ -16,10 +16,12 @@ Moteur du jeu
 #include "constantes.h"
 #include "jeu.h"
 
+int niveauActuel = 0;
+
 void jouer(SDL_Surface* ecran)
 {
 	SDL_Surface *mario[4] = {NULL};
-	SDL_Surface *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL;
+	SDL_Surface *mur = NULL, *caisse = NULL, *caisseOK = NULL, *objectif = NULL, *marioActuel = NULL, *gagner = NULL;
 	SDL_Surface *regle = NULL;
 	SDL_Rect position, positionJoueur;
 	SDL_Event event;
@@ -37,12 +39,13 @@ void jouer(SDL_Surface* ecran)
 	mario[HAUT] = IMG_Load("mario_haut.gif");
 	mario[DROITE] = IMG_Load("mario_droite.gif");
 	regle = IMG_Load("regle.png");
+	gagner = IMG_Load("gagner.png");
 
 
 	marioActuel = mario[BAS];
 
 	//Chargement du niveau
-	if(!chargerNiveau(carte))
+	if(!chargerNiveau(carte, niveauActuel))
 		exit(EXIT_FAILURE);
 
 	/*Recherche de la position de mario au départ*/
@@ -65,8 +68,10 @@ void jouer(SDL_Surface* ecran)
 		SDL_WaitEvent(&event);
 		if(event.type == SDL_QUIT)
 			exit(EXIT_SUCCESS);
+
 		if(event.key.keysym.sym == SDLK_ESCAPE)
 			continuer = 0;
+
 		SDL_Flip(ecran);
 	}
 	SDL_FreeSurface(regle);
@@ -133,16 +138,45 @@ void jouer(SDL_Surface* ecran)
 				}
 			}
 		}
-		if(!objectifRestants)
-			continuer = 0;
 
+		SDL_Flip(ecran);
 		position.x = positionJoueur.x * TAILLE_BLOC;
 		position.y = positionJoueur.y * TAILLE_BLOC;
 		SDL_BlitSurface(marioActuel, NULL, ecran, &position);
 		SDL_Flip(ecran);
+		
+		if(!objectifRestants)
+		{
+			position.x = 0;
+			position.y = 0;
+
+			SDL_BlitSurface(gagner, NULL, ecran, &position);
+			SDL_Flip(ecran);
+
+			while(continuer)
+			{
+				SDL_WaitEvent(&event);
+				if(event.type == SDL_QUIT)
+					break;
+
+				switch(event.key.keysym.sym)
+				{
+					case SDLK_KP1:
+						niveauActuel++;
+						jouer(ecran);
+					break;
+					case SDLK_KP2:
+						continuer = 0;
+					case SDLK_ESCAPE:
+						continuer = 0;
+					break;
+				}
+			}
+		}
 	}
 
 	SDL_EnableKeyRepeat(0,0);
+	SDL_FreeSurface(gagner);
 	SDL_FreeSurface(mur);
 	SDL_FreeSurface(caisse);
 	SDL_FreeSurface(caisseOK);
