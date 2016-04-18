@@ -10,7 +10,7 @@ int main(void)
 	SDL_Surface *screen = NULL, *text_surface = NULL, *fond = NULL;
 	SDL_Event event;
 	SDL_Rect pos;
-	TTF_Font *my_font;
+	TTF_Font *my_font = NULL;
 	SDL_Color color = {0,0,0,0};
 	int continuer = 1;
 
@@ -28,7 +28,7 @@ int main(void)
 	}
 
 	my_font = TTF_OpenFont("alphawood.ttf", 66);
-
+	TTF_SetFontStyle(my_font, TTF_STYLE_BOLD | TTF_STYLE_UNDERLINE );
 	text_surface = TTF_RenderText_Blended(my_font, "Hello !",color);
 
 
