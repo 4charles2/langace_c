@@ -1,19 +1,24 @@
-NAME = pendu
-SRC = main.c \
-      main.h \
-	  mot_mystere.c\
-	  engine_game.c
-CC = gcc
-CFLAG = -c -Wall -Werror -Wextra -pedantic -ansi -g
+NAME = PENDU
+SRC  = main.c \
+	   game.c\
+	   wordMystery.c
+OBJ  = main.o \
+	   game.o\
+	   wordMystery.o
+CC	 = gcc
+FLAG = -c -Wall -Werror -Wextra -pedantic -ansi -g
+CFLAG= $$(sdl-config --cflags --libs)
+LIBS = -lSDL -lSDL_image -lSDL_ttf
+
 #l'option -c permet de ne pas linker lors de la compilation
 
-all : $(NAME)
+all : $(NAME) clean
 
 $(NAME): main.o
-	$(CC) main.o mot_mystere.o  engine_game.o -o $(NAME)
+	$(CC) $(CFLAG) $(OBJ) -o $(NAME) $(LIBS)
 
 main.o:
-	$(CC) $(CFLAG) $(SRC)
+	$(CC) $(CFLAG) $(FLAG) $(SRC)
 
 clean :
 	rm -f *.o *.h.gch

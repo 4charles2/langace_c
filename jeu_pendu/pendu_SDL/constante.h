@@ -15,10 +15,10 @@ Rôle : défini toutes les constantes du jeu
 	typedef struct s_show
 	{
 		SDL_Surface *area[8];
-		SDL_Surface *player[6];
+		SDL_Surface *pendu[6];
 		SDL_Surface *surface_font[3];
 		SDL_Rect position_decor[5];
-		SDL_Rect position_player[6];
+		SDL_Rect position_pendu[6];
 		SDL_Rect position_font[4];
 		TTF_Font *font, *font2;
 		char *texte[3];

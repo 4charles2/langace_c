@@ -31,7 +31,7 @@ void ft_draw_word_dico(t_manip_dico* manip, FILE *dico, t_show *party)
 
 	}
 	fgets(party->mystery_word, sizeof(party->mystery_word), dico);
-	party->mystery_word[strlen(party->mystery_word)] = '\0';
+	party->mystery_word[strlen(party->mystery_word)-1] = '\0';
 }
 
 void ft_count_word_dico(t_manip_dico* manip, FILE *dico)
@@ -52,10 +52,10 @@ void ft_fill_word_answer(t_show* party)
 	int taille = strlen(party->mystery_word), i = 0;
 	while(taille > i)
 	{
-		party->answer_word[i] = 'A';
+		party->answer_word[i] = '*';
 		i++;
 	}
-	party->answer_word[i-1] = '\0';
+	party->answer_word[i] = '\0';
 }
 
 void ft_empty_buffer()
