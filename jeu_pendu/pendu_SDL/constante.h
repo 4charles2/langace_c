@@ -21,6 +21,7 @@ Rôle : défini toutes les constantes du jeu
 		SDL_Rect position_pendu[6];
 		SDL_Rect position_font[4];
 		TTF_Font *font, *font2;
+		int continuer;
 		char *texte[3];
 		char mystery_word[30];
 		char answer_word[30];

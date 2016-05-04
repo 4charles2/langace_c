@@ -6,22 +6,35 @@
 
 int ft_game()
 {
+	int taille = 0, i = 0;
 	t_show party;
+	party.continuer = 1;
+	taille = strlen(party.mystery_word);
 
-	strcat(party.character_already,".......");
+	while(i < taille)
+		{
+			party.character_already[i] = '.';
+			i++;
+		}
+
+	party.character_already[++i] = '\0';
 	party.nb_shots = 6;
 
-	if(!ft_word_mystery(&party))
-		fprintf(stderr, "erreur draw word dico");
+	while(party.continuer)
+	{
+		if(!ft_word_mystery(&party))
+			fprintf(stderr, "erreur draw word dico");
 
-	printf("Le mot mystere1 : %s\n", party.mystery_word);
-	printf("Le mot answer1  : %s\n", party.answer_word);
+		printf("Le mot mystere1 : %s\n", party.mystery_word);
+		printf("Le mot answer1  : %s\n", party.answer_word);
 
-	if(ft_init_SDL(&party))
-		fprintf(stderr, "initSDL OK");
+		if(ft_init_SDL(&party))
+			fprintf(stderr, "initSDL OK");
 
-	if(ft_engine_game(&party))
-		fprintf(stderr, "engine_game ok");
+		if(ft_engine_game(&party))
+			fprintf(stderr, "engine game OK");
+
+	}
 
 	if(ft_free_surface(&party))
 		fprintf(stderr, "free surface ok");
@@ -31,7 +44,7 @@ int ft_game()
 
 int ft_engine_game(t_show* party)
 {
-	int continuer = 1, y = 0;
+	int y = 0, continuer = 0;
 	SDL_Event event;
 
 	ft_blit_surface(party);
@@ -48,8 +61,6 @@ int ft_engine_game(t_show* party)
 				switch(event.key.keysym.sym)
 				{
 					case SDLK_a:
-						/*Tentation de récupération de la valeur d'une lettre afin de faire une comparaison numérique et de ensuite faire une convertion numérique int char caractere corespondant*/
-						/*Ceci éviterai de devoir verifier chaque lettre*/
 						ft_check_char(party, 'A', &y);
 						break;
 					case SDLK_b:
@@ -128,7 +139,7 @@ int ft_engine_game(t_show* party)
 						ft_check_char(party, 'Z', &y);
 						break;
 					case SDLK_ESCAPE:
-						continuer = 0;
+						party->continuer = 0;
 						break;
 					default:
 						continuer = 1;
@@ -367,23 +378,12 @@ void ft_blit_surface(t_show* party)
 
 int ft_free_surface(t_show* party)
 {
-	int i = 0;
-
-	while(i <= 3)
-	{
-		SDL_FreeSurface(party->surface_font[i]);
-		i++;
-	}
-	i = 1;
-	while(i <= 7)
-	{
-		SDL_FreeSurface(party->area[i]);
-		i++;
-	}
-
+	SDL_FreeSurface(party->area[0]);
 
 	TTF_CloseFont(party->font2);
 	TTF_Quit();
+
+	SDL_Quit();
 	return 1;
 }
 
@@ -435,11 +435,13 @@ void ft_game_over(t_show* party, int finish)
 						exit(EXIT_SUCCESS);
 						break;
 					case SDLK_y:
+						ft_free_surface(party);
+						party->continuer = 1;
 						ft_game();
 						break;
 					case SDLK_n:
-						ft_free_surface(party);
-						exit(EXIT_SUCCESS);
+						party->continuer = 0;
+						ft_game();
 						break;
 					default:
 						continuer = 1;
