@@ -26,8 +26,8 @@ int ft_convertCharInt(char *number)
 	unite -= 48;
 	for(int i=taille-2, multiplicateur = 10; i >= 0; i--, multiplicateur *= 10)
 	{
-		dizaine = number[i];
-		dizaine -= 48;
+		dizaine = number[i]; /*Convertion en int*/
+		dizaine -= 48;/*Convertion équivalent ascci en nombre*/
 		dizaine *= multiplicateur;
 		num += dizaine;
 	}
