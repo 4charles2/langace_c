@@ -1,5 +1,5 @@
 EXEC= ESSAI
-SRC= number_premier.c
+SRC= suite_fibonacci.c
 OBJ= $(SRC:.c=.o)
 CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g -std=c99
 LDFLAGS= -lm
