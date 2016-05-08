@@ -1,5 +1,5 @@
 EXEC= ESSAI
-SRC= suite_fibonacci.c
+SRC= table_multiplication_1a10.c
 OBJ= $(SRC:.c=.o)
 CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g -std=c99
 LDFLAGS= -lm

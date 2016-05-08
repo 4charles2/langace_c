@@ -6,14 +6,17 @@ int ft_convertCharInt(char *number);
 
 int main (int argc, char **argv)
 {
-	if(argc < 1)
+	if(argc < 2)
+	{
+		printf("Vous n'avez entrez un nombre en argument\n");
 		exit(EXIT_FAILURE);
+	}
 
 	int nbLigne = ft_convertCharInt(argv[1]);
 	for(int i = 0, e = 0; i<nbLigne; i++, e++)
 	{
 		for(int c = 0; printf("*"),c < e; c++);
-		printf("%d%d\n",e, i);
+		printf("\n");
 	}
 }
 

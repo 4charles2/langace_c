@@ -49,7 +49,6 @@ int ft_suite_fibonacci(int n)
 	{
 		fb = som - fb;
 		som += fb;
-		
 	}
 
 	return som;
