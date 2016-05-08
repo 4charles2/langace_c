@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int ft_convertCharInt(char *number);
+
+int main (int argc, char **argv)
+{
+	if(argc < 1)
+		exit(EXIT_FAILURE);
+
+	int nbLigne = ft_convertCharInt(argv[1]);
+	printf("*\n");
+	for(int i = 0, e = 0; i<nbLigne; i++, e++)
+	{
+		for(int c = 0; printf("*"),c < e; c++);
+		printf("%d%d\n",e, i);
+	}
+}
+
+int ft_convertCharInt(char *number)
+{
+	int unite = 0, dizaine = 0;
+	int num = 0;
+	unite = number[1];
+	unite -= 48;
+	dizaine = number[0];
+	dizaine -= 48;
+	dizaine *= 10;
+
+	return num = dizaine + unite;
+}
