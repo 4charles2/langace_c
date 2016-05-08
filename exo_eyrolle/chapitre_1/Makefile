@@ -1,7 +1,7 @@
 EXEC= ESSAI
-SRC= main.c
+SRC= boucleExo.c
 OBJ= $(SRC:.c=.o)
-CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g
+CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g -std=c99
 
 all: $(EXEC) clean
 $(EXEC): $(OBJ)
