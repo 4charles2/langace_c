@@ -3,34 +3,26 @@
 #include <string.h>
 
 int ft_convertCharInt(char *number);
-
-
-void ft_affiche_table_multiplication();
+long ft_factorielle(int facteur);
 
 int main (int argc, char **argv)
 {
 	if(argc < 2)
-		printf("Vous n'avez pas entrer d'argument");
-	
-	int tableMax = ft_convertCharInt(argv[1]);
+	{
+		printf("Vous n'avez pas entrerd'arguments !\n");
+		exit(EXIT_FAILURE);
+	}
 
-	ft_affiche_table_multiplication(tableMax);
+	int nb = ft_convertCharInt(argv[1]);
+	printf("%ld\n",ft_factorielle(nb));
+
 	return EXIT_SUCCESS;
 }
 
-void ft_affiche_table_multiplication(int tableMax)
+long ft_factorielle(int facteur)
 {
-	int i = 0;
-	printf("     |");
-	for(i = 1; printf("%4d", i), i < tableMax; i++);
-	printf("\n------");
-	for(i = 1; printf("----"), i < tableMax ; i++);
-	for(i = 1; i <= tableMax; i++)
-	{
-		printf("\n%4d |", i);
-		for(int y = 1; y <= tableMax; y++) printf("%4d", y*i);
-	}
-
+	if (facteur>1) return (ft_factorielle(facteur-1)*facteur);
+	else return 1;
 }
 
 int ft_convertCharInt(char *number)
