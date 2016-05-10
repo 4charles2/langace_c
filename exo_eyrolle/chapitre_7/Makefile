@@ -1,5 +1,6 @@
+
 EXEC= ESSAI
-SRC= exercice_4.c
+SRC= lectureCour.c
 OBJ= $(SRC:.c=.o)
 CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g -std=c99
 LDFLAGS= -lm

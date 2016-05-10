@@ -1,5 +1,5 @@
 EXEC= ESSAI
-SRC= exercice_4.c
+SRC= initialisation_dble_list_chaine.c
 OBJ= $(SRC:.c=.o)
 CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g -std=c99
 LDFLAGS= -lm
