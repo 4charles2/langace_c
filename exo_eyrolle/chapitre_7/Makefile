@@ -1,9 +1,8 @@
-
-EXEC= ESSAI
-SRC= lectureCour.c
+EXEC= EXO4
+SRC= exo4.c
 OBJ= $(SRC:.c=.o)
 CFLAGS= -Wall -Werror -Wextra -ansi -pedantic -c -g -std=c99
-LDFLAGS= -lm
+LDFLAGS= -L../../lib_charles/lib/ -ltab
 
 all: $(EXEC) clean
 $(EXEC): $(OBJ)
