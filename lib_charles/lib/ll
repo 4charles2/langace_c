@@ -1,0 +1,9 @@
+#ifndef __STR__
+#define __STR__
+void ft_putchar(char c);
+int ft_putnbr(int nb);
+void ft_putstr(char *str);
+void ft_strlen(char *str);
+void ft_put_str_fd(char *str, int fd);/* fd = file descriptor (stdin stdout) en numerique soit (0, 1, 2)*/
+int ft_number_occurence(char *str, char c);
+#endif
