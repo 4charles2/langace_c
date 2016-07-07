@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <stdlib.h>
+//Permet de convertir un nombre des base b <= 36
+char chiffre(int nb);
+int nombre(char ch);
+	char *tabChiffre = {"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"};
+
+int main (void)
+{
+	int choix = 0;
+	printf("Convertisseur chiffre en nombre base 36\n Choix de la conversion : \n 1.chiffre en nombre (exemple 10 = A)\n 2.Nombre en chiffre (exemple A = 10)\n Entrer votre choix : ");
+	erreur:
+	scanf("%d", &choix);
+	switch(choix)
+	{
+		case 1:
+			printf ("%c", chiffre(10));
+		break;
+		case 2:
+			printf("%d", nombre('A'));
+		break;
+		default:
+			printf("Vous n'avez pas entrer un bon choix.\n");
+			goto erreur;
+		break;
+	}
+	return EXIT_SUCCESS;
+}
+
+char chiffre(int nb)
+{
+	printf("Le chiffre %d est egale a : %c", nb, tabChiffre[nb]);
+	return tabChiffre[nb];
+}
+
+int nombre(char ch)
+{
+	int index = 0;
+	while (tabChiffre[index])
+	{
+		if (tabChiffre[index] == ch){
+			return index;}
+		index++;
+	}
+}
